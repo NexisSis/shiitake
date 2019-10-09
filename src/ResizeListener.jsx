@@ -5,50 +5,40 @@
 
 /* eslint-env browser */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 const defaultThrottleRate = 200;
 
-class ResizeListener extends React.Component {
-  constructor() {
-    super();
+const ResizeListener = (props) => {
+  const [_resizeTimer, setResizeTimer] = useState(false);
+  const [_pendingResize, setPendingResize] = useState(false);
 
-    this._handleResize = this._handleResize.bind(this);
-  }
+  useEffect(() => {
+    const _handleResize = () => {
+      if (!_resizeTimer) {
+        props.handleResize();
+        // throttle the listener
+         setResizeTimer(setTimeout(() => {
+          // if a resize came in while we paused, adjust again once after the pause before we start listening again
+          if (_pendingResize) {
+            props.handleResize();
+          }
+          setResizeTimer(false);
+        }, props.throttleRate));
+      } else {
+        setPendingResize(true);
+      }
+    };
 
-  componentDidMount() {
-    // We need to bind again when passing to the window listner in for IE10
-    this._handleResize = this._handleResize.bind(this);
-    window.addEventListener('resize', this._handleResize);
-  }
+    window.addEventListener('resize', _handleResize);
+    return () => {
+      window.removeEventListener('resize', _handleResize);
+    };
+  });
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this._handleResize);
-  }
-
-  _handleResize() {
-    if (!this._resizeTimer) {
-      this.props.handleResize();
-
-      // throttle the listener
-      this._resizeTimer = setTimeout(() => {
-        // if a resize came in while we paused, adjust again once after the pause before we start listening again
-        if (this._pendingResize) {
-          this.props.handleResize();
-        }
-
-        this._resizeTimer = false;
-      }, this.props.throttleRate);
-    } else {
-      this._pendingResize = true;
-    }
-  }
-
-  render() {
-    return null;
-  }
-}
+  return null;
+};
 
 ResizeListener.defaultProps = {
   throttleRate: defaultThrottleRate,
