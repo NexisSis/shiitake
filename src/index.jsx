@@ -33,6 +33,7 @@ class Shiitake extends React.Component {
     };
 
     this.handleResize = this.handleResize.bind(this);
+    this.resizeListenerRef = React.createRef();
   }
 
   componentDidMount() {
@@ -167,23 +168,21 @@ class Shiitake extends React.Component {
   }
 
   render() {
-    const { renderFullOnServer, className, throttleRate, overflowNode } = this.props;
+    const { renderFullOnServer, className, overflowNode } = this.props;
     const { fixHeight, children, testChildren } = this.state;
     const tagNames = { main: setTag(this.props.tagName) };
+    const thisHeight = (fixHeight || 0) + 'px';
+    const maxHeight = (renderFullOnServer) ? '' : thisHeight;
+    const overflow = (testChildren.length < this.state.allChildren.length) ? overflowNode : null;
 
     const vertSpacers = [];
     for (let i = 0; i < this.props.lines; i++) {
       vertSpacers.push(<span style={block} key={i}>W</span>);
     }
 
-    const thisHeight = (fixHeight || 0) + 'px';
-    const maxHeight = (renderFullOnServer) ? '' : thisHeight;
-
-    const overflow = (testChildren.length < this.state.allChildren.length) ? overflowNode : null;
-
     return (
-      <tagNames.main className={className || ''} {...passProps(this.props)}>
-        <ResizeListener handleResize={this.handleResize} throttleRate={throttleRate} />
+      <tagNames.main ref={this.resizeListenerRef} className={className || ''} {...passProps(this.props)}>
+        <ResizeListener handleResize={this.handleResize} resizeListenerRef={this.resizeListenerRef} />
 
         <span style={{ ...wrapperStyles, maxHeight }}>
           <span style={childrenStyles}>{children}{overflow}</span>
@@ -203,7 +202,6 @@ class Shiitake extends React.Component {
 Shiitake.defaultProps = {
   className: '',
   renderFullOnServer: false,
-  throttleRate: undefined,
   tagName: undefined,
   overflowNode: '\u2026',
   // in case someone accidentally passes something undefined in as children
@@ -216,7 +214,6 @@ Shiitake.propTypes = {
   className: PropTypes.string,
   children: PropTypes.string.isRequired,
   renderFullOnServer: PropTypes.bool,
-  throttleRate: PropTypes.number,
   tagName: PropTypes.string,
   overflowNode: PropTypes.node,
   onTruncationChange: PropTypes.func,

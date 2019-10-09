@@ -37,7 +37,8 @@
   "homepage": "https://github.com/bsidelinger912/shiitake#readme",
   "tonicExampleFilename": "tonicExample.js",
   "dependencies": {
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
     "react": ">= 16.0.0",

@@ -35,7 +35,7 @@ const App = () => {
 
       <h2>Compare with webkit line-clamp</h2>
       <div className="side-by-side">
-        <Shiitake lines={2} throttleRate={200} className="shiitake">
+        <Shiitake lines={2}  className="shiitake">
           {text}
         </Shiitake>
         <div className="line-clamp">
@@ -45,14 +45,14 @@ const App = () => {
 
       <h2>Create inline style with flexbox:</h2>
       <div className="shiitake-inline-wrapper">
-        <Shiitake lines={1} throttleRate={200} className="shiitake-inline">
+        <Shiitake lines={1}  className="shiitake-inline">
           {text}
         </Shiitake>
         &gt;
       </div>
 
       <h2>Specify your own tag name:</h2>
-      <Shiitake tagName="p" lines={1} throttleRate={200} className="shiitake-paragraph" onClick={() => setIpsum(ipsum2)}>
+      <Shiitake tagName="p" lines={1}  className="shiitake-paragraph" onClick={() => setIpsum(ipsum2)}>
         {ipsum}
       </Shiitake>
 
