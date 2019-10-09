@@ -19,28 +19,6 @@ import {
 } from './constants';
 
 class Shiitake extends React.Component {
-  static propTypes = {
-    lines: PropTypes.number.isRequired,
-    className: PropTypes.string,
-    children: PropTypes.string.isRequired,
-    renderFullOnServer: PropTypes.bool,
-    throttleRate: PropTypes.number,
-    tagName: PropTypes.string,
-    overflowNode: PropTypes.node,
-    onTruncationChange: PropTypes.func,
-  }
-
-  static defaultProps = {
-    className: '',
-    renderFullOnServer: false,
-    throttleRate: undefined,
-    tagName: undefined,
-    overflowNode: '\u2026',
-    // in case someone accidentally passes something undefined in as children
-    children: '',
-    onTruncationChange: undefined,
-  }
-
   constructor(props) {
     super(props);
 
@@ -221,5 +199,27 @@ class Shiitake extends React.Component {
     );
   }
 }
+
+Shiitake.defaultProps = {
+  className: '',
+  renderFullOnServer: false,
+  throttleRate: undefined,
+  tagName: undefined,
+  overflowNode: '\u2026',
+  // in case someone accidentally passes something undefined in as children
+  children: '',
+  onTruncationChange: undefined,
+};
+
+Shiitake.propTypes = {
+  lines: PropTypes.number.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.string.isRequired,
+  renderFullOnServer: PropTypes.bool,
+  throttleRate: PropTypes.number,
+  tagName: PropTypes.string,
+  overflowNode: PropTypes.node,
+  onTruncationChange: PropTypes.func,
+};
 
 export default Shiitake;

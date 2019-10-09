@@ -11,15 +11,6 @@ import PropTypes from 'prop-types';
 const defaultThrottleRate = 200;
 
 class ResizeListener extends React.Component {
-  static propTypes = {
-    handleResize: PropTypes.func.isRequired,
-    throttleRate: PropTypes.number,
-  }
-
-  static defaultProps = {
-    throttleRate: defaultThrottleRate,
-  }
-
   constructor() {
     super();
 
@@ -58,5 +49,14 @@ class ResizeListener extends React.Component {
     return null;
   }
 }
+
+ResizeListener.defaultProps = {
+  throttleRate: defaultThrottleRate,
+};
+
+ResizeListener.propTypes = {
+  handleResize: PropTypes.func.isRequired,
+  throttleRate: PropTypes.number,
+};
 
 export default ResizeListener;
