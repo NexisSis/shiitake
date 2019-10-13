@@ -4,7 +4,6 @@ declare module 'shiitake' {
 
   export interface ShiitakeProps {
     lines: number,
-    throttleRate?: number,
     className?: string,
     tagName?: string,
     renderFullOnServer?: boolean,
