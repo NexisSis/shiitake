@@ -95,7 +95,6 @@ const Shiitake = (props) => {
       _setChildren();
       return;
     }
-
     if (linear) {
       _setTestChildren(testChildren.text.length, testChildren.text.length + 1);
       return;
@@ -141,6 +140,7 @@ const Shiitake = (props) => {
     if (isFirstRun.current) {
       return;
     }
+
     _callDeffered(_checkHeight.bind(this, testChildren.start, testChildren.end));
   }, [testChildren]);
 
