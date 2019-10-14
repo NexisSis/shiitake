@@ -104,34 +104,27 @@ const Shiitake = (props) => {
     _setTestChildren(halfWay, end);
   };
 
-  // adds the trimmed content to state and fills the sizer on resize events
   const handleResize = () => {
     // if we don't have a spreader, let it come around again
     if (!spreaderRef) { return; }
     const availableWidth = spreaderRef.current.offsetWidth;
-    // set the max height right away, so that the resize throttle doesn't allow line break jumps
-    // also populate with the full string if we don't have a working trimmed string yet
+
     setChildren(children || allChildren);
     setFixHeight(sizerRef.current.offsetHeight);
-
 
     // was there a width change, or lines change?
     if (availableWidth !== lastCalculatedWidth && !handlingResize) {
       setHandlingResize(true);
       // first render?
       if (testChildren.text === '') {
-        // give it the full string and check the height
         setTestChildren({ text: allChildren, start: 0, end: allChildren.length });
         return;
       }
       // window got smaller?
       if (availableWidth < lastCalculatedWidth) {
-        // increment down one
         setTestChildren({ text: testChildren.text, start: testChildren.length, end: testChildren.length - 1 });
         return;
       }
-      // window got larger?
-      // increment up one
       setTestChildren({ text: testChildren.text, start: testChildren.length, end: testChildren.length + 1 });
     }
   };
